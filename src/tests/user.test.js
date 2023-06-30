@@ -43,7 +43,6 @@ test("POST -> 'URL', should return status code 201, res.body.firstName", async()
     .send(createUser)
 
     userId =  res.body.id
-    console.log(res.body)
 
     expect(res.status).toBe(201)
     expect(res.body.firstName).toBe(createUser.firstName)
@@ -75,8 +74,6 @@ test("POST -> 'BASE_URL/login, should return code 200, compere re.body,firstname
     const res =  await request(app)
     .post(`${BASE_URL}/login`)
     .send(userLogin)
-
-    console.log(res.body)
 
     expect(res.status).toBe(200)
     expect(res.body.user.email).toBe(userLogin.email)
