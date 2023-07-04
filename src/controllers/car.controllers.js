@@ -4,18 +4,32 @@ const Product = require('../models/Product');
 
 const getAll = catchError(async(req, res) => {
     const user = req.user
-    const results = await Car.findAll({include :[Product], });
+    const results = await Car.findAll({include :[Product],where:{userId: user.id} });
     return res.json(results);
 });
 
 const create = catchError(async(req, res) => {
-    const result = await Car.create(req.body);
+
+    const userId= req.user.id
+    const {quantity, productId} = res.body
+
+    const body = {userId, quantity, productId}
+
+    const result = await Car.create(body);
     return res.status(201).json(result);
 });
 
 const remove = catchError(async(req, res) => {
     const { id } = req.params;
-    await Car.destroy({ where: {id} });
+    const userId = req.user.id
+    const result = await Car.destroy({
+        //filtrar carrito por usuario y por id del carrito
+         where: {
+            id, 
+         userId
+         }
+    });
+    if(!result) return res.sendStatus(404)
     return res.sendStatus(204);
 });
 

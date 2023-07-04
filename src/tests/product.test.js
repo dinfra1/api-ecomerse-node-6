@@ -56,7 +56,7 @@ test("GET -> 'BASE_URL_PRODUCTS' should status code 200 and res.body.length === 
         .get(BASE_URL_PRODUCTS)
           
     expect(res.status).toBe(200)
-    expect(res.body).toHaveLength(1)
+    expect(res.body).toHaveLength(2)
     expect(res.body[0]).toBeDefined()
 })
 
