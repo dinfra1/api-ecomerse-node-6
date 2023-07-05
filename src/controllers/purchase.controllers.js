@@ -2,15 +2,22 @@ const catchError = require('../utils/catchError');
 const Purchase = require('../models/Purchase');
 const Product = require('../models/Product');
 const Car = require('../models/Car');
+const Category = require('../models/Category');
+const ProductImg = require('../models/Productimg');
 
 const getAll = catchError(async(req, res) => {
     const userId = req.user.id
-    const results = await Purchase.findAll(
-        {
-            where: {userId},
-            include: [Product]
-        }
-    );
+    const results = await Purchase.findAll({
+        where:{userId},
+        include:[
+            {
+                model:Product,
+                include:[Category,ProductImg]
+
+            }
+        ]
+
+    });
     return res.json(results);
 });
 
@@ -27,7 +34,7 @@ const create = catchError(async(req, res) => {
 
     const result = await Purchase.bulkCreate(car);
 
-    await car.destroy({where:{userId}})
+    await Car.destroy({where:{userId}})
 
     return res.status(201).json(result);
 });

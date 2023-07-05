@@ -1,7 +1,7 @@
 const request = require("supertest")
 const app = require("../app")
 const Product = require("../models/Product")
-const Cart = require("../models/Car")
+const Car = require("../models/Car")
 
 require("../models")
 
@@ -41,7 +41,7 @@ test("POST ->'BASE_URL_PURCHASE', should return status code 201 and res.body.qua
         productId:product.id
     }
 
-    await Cart.create(cartBody)
+    await Car.create(cartBody)
 
     const res = await request(app)
         .post(BASE_URL_PURCHASE)

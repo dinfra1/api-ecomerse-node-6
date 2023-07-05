@@ -1,13 +1,21 @@
 const catchError = require('../utils/catchError');
 const Car = require('../models/Car');
 const Product = require('../models/Product');
+const ProductImg = require('../models/Productimg');
 
 const getAll = catchError(async(req, res) => {
     const user = req.user
-    const results = await Car.findAll({include :[Product],where:{userId: user.id} });
+    const results = await Cart.findAll({
+        include:[
+            {
+                model:Product,
+                include:[Category,ProductImg],
+            }
+        ],
+        where:{userId:user.id}
+    });
     return res.json(results);
 });
-
 const create = catchError(async(req, res) => {
 
     const userId= req.user.id

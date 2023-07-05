@@ -43,8 +43,8 @@ const testImage = catchError(async(req,res)=>{
     const {id} = req.params
     const product = await Product.findByPk(id)
 
-    product.setProductImg([req.body])
-    const image = product.getProductImg()
+    await product.setProductImg(req.body)
+    const image = await product.getProductImg()
 
     return res.json(image)
 });
